@@ -23,11 +23,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "scheme": "exp",  
-    "platforms": ["ios", "android", "web", ""],  
-    "deepLinking": {
-      "enabled": true
     }
   }
 }
