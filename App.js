@@ -4,8 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { View, Image, ActivityIndicator } from 'react-native';
-import { getAuth, onAuthStateChanged, signOut } from '@firebase/auth';
+import { ActivityIndicator } from 'react-native';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { initializeApp } from '@firebase/app';
 import { 
   FIREBASE_API_KEY, 
@@ -17,6 +17,7 @@ import {
   FIREBASE_MEASUREMENT_ID 
 } from '@env';
 
+// Firebase Configuration
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
   authDomain: FIREBASE_AUTH_DOMAIN,
@@ -33,14 +34,24 @@ const auth = getAuth(firebaseApp);
 // Import Screens
 import HomeScreen from './screens/home';
 import WorkoutScreen from './screens/workout';
+import TreadmillWorkout from './screens/workouts/treadmillworkout'; // New Treadmill Screen
 import JournalScreen from './screens/journal';
 import AdviceScreen from './screens/advice';
 import AccountScreen from './screens/account';
-import AuthScreen from './screens/auth'; // Authentication screen (Login/Signup)
+import AuthScreen from './screens/auth'; // Authentication screen
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+// Stack Navigator for the Workout Section
+const WorkoutStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="WorkoutMain" component={WorkoutScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="TreadmillWorkout" component={TreadmillWorkout} />
+  </Stack.Navigator>
+);
+
+// Bottom Tab Navigator
 function MainTabs() {
   return (
     <Tab.Navigator
@@ -49,23 +60,12 @@ function MainTabs() {
         tabBarIcon: ({ color, size }) => {
           let iconName;
           switch (route.name) {
-            case 'Home':
-              iconName = 'home';
-              break;
-            case 'Workout':
-              iconName = 'dumbbell';
-              break;
-            case 'Journal':
-              iconName = 'notebook';
-              break;
-            case 'Advice':
-              iconName = 'lightbulb-on-outline';
-              break;
-            case 'Account':
-              iconName = 'account-circle';
-              break;
-            default:
-              iconName = 'circle';
+            case 'Home': iconName = 'home'; break;
+            case 'Workout': iconName = 'dumbbell'; break;
+            case 'Journal': iconName = 'notebook'; break;
+            case 'Advice': iconName = 'lightbulb-on-outline'; break;
+            case 'Account': iconName = 'account-circle'; break;
+            default: iconName = 'circle';
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
@@ -74,7 +74,7 @@ function MainTabs() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Workout" component={WorkoutScreen} />
+      <Tab.Screen name="Workout" component={WorkoutStack} options={{ headerShown: false }} />
       <Tab.Screen name="Journal" component={JournalScreen} />
       <Tab.Screen name="Advice" component={AdviceScreen} />
       <Tab.Screen name="Account" component={AccountScreen} />
