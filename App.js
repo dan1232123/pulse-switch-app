@@ -34,7 +34,8 @@ const auth = getAuth(firebaseApp);
 // Import Screens
 import HomeScreen from './screens/home';
 import WorkoutScreen from './screens/workout';
-import TreadmillWorkout from './screens/workouts/treadmillworkout'; // New Treadmill Screen
+import TreadmillWorkout from './screens/workouts/treadmillworkout';
+import ExecuteTreadmillWorkout from './screens/workouts/executetreadmillworkout'; // New screen for executing workout
 import JournalScreen from './screens/journal';
 import AdviceScreen from './screens/advice';
 import AccountScreen from './screens/account';
@@ -48,6 +49,7 @@ const WorkoutStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="WorkoutMain" component={WorkoutScreen} options={{ headerShown: false }} />
     <Stack.Screen name="TreadmillWorkout" component={TreadmillWorkout} />
+    <Stack.Screen name="ExecuteTreadmillWorkout" component={ExecuteTreadmillWorkout} />
   </Stack.Navigator>
 );
 
@@ -112,5 +114,4 @@ export default function App() {
     </PaperProvider>
   );
 }
-
 
