@@ -17,7 +17,7 @@ import {
   FIREBASE_MEASUREMENT_ID 
 } from '@env';
 
-// Firebase Configuration
+// ✅ Firebase Configuration
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
   authDomain: FIREBASE_AUTH_DOMAIN,
@@ -31,20 +31,33 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 
-// Import Screens
+// ✅ Import Screens
 import HomeScreen from './screens/home';
 import WorkoutScreen from './screens/workout';
 import TreadmillWorkout from './screens/workouts/treadmillworkout';
-import ExecuteTreadmillWorkout from './screens/workouts/executetreadmillworkout'; // New screen for executing workout
+import ExecuteTreadmillWorkout from './screens/workouts/executetreadmillworkout'; 
 import JournalScreen from './screens/journal';
 import AdviceScreen from './screens/advice';
 import AccountScreen from './screens/account';
-import AuthScreen from './screens/auth'; // Authentication screen
+import AuthScreen from './screens/auth'; 
+import AboutPulseSwitch from './screens/home_screens/aboutpulseswitch';
+import DiaryScreen from './screens/journal_screens/diary';
+import NotesScreen from './screens/journal_screens/notes';
+import EditNoteScreen from './screens/journal_screens/editnote';
+import EditDiaryEntryScreen from './screens/journal_screens/editdiary';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-// Stack Navigator for the Workout Section
+// ✅ Stack Navigator for Home (Includes AboutPulseSwitch)
+const HomeStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="HomeMain" component={HomeScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="AboutPulseSwitch" component={AboutPulseSwitch} />
+  </Stack.Navigator>
+);
+
+// ✅ Stack Navigator for Workouts
 const WorkoutStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="WorkoutMain" component={WorkoutScreen} options={{ headerShown: false }} />
@@ -53,7 +66,16 @@ const WorkoutStack = () => (
   </Stack.Navigator>
 );
 
-// Bottom Tab Navigator
+const JournalStack = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="JournalMain" component={JournalScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Diary" component={DiaryScreen} />
+    <Stack.Screen name="Notes" component={NotesScreen} />
+    <Stack.Screen name="EditNote" component={EditNoteScreen} />
+    <Stack.Screen name="EditDiaryEntry" component={EditDiaryEntryScreen} />
+  </Stack.Navigator>
+);
+// ✅ Bottom Tab Navigator
 function MainTabs() {
   return (
     <Tab.Navigator
@@ -75,15 +97,16 @@ function MainTabs() {
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }} />
       <Tab.Screen name="Workout" component={WorkoutStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Journal" component={JournalScreen} />
+      <Tab.Screen name="Journal" component={JournalStack} options={{ headerShown: false }} />
       <Tab.Screen name="Advice" component={AdviceScreen} />
       <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );
 }
 
+// ✅ Main App Component
 export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -114,4 +137,5 @@ export default function App() {
     </PaperProvider>
   );
 }
+
 

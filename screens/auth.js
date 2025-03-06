@@ -81,6 +81,9 @@ const AuthScreen = ({ email, setEmail, password, setPassword, username, setUsern
             {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Sign In'}
           </Text>
         </TouchableOpacity>
+
+        <Text style={styles.disclaimerNotice}>PulseSwitch 2025</Text>
+
       </View>
     </View>
   );
@@ -175,6 +178,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'AvenirNext-DemiBold',
   },
   inputContainer: {
     width: '90%',
@@ -184,10 +188,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 15,
     elevation: 3, // Shadow effect
+    fontFamily: 'AvenirNext-DemiBold',
   },
   input: {
     fontSize: 16,
     color: '#333',
+    fontFamily: 'AvenirNext-DemiBold',
   },
   authButton: {
     width: '90%',
@@ -201,10 +207,17 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
+    fontFamily: 'AvenirNext-DemiBold',
   },
   toggleText: {
     color: '#3498db',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'AvenirNext-DemiBold',
   },
+  disclaimerNotice: {
+    color: 808080,
+    fontSize: 10,
+    marginTop: 180
+  }
 });
