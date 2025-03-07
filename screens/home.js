@@ -113,8 +113,6 @@ const HomeScreen = () => {
 
     return (
         <View style={styles.container}>
-            {/* ✅ Fixed White Banner at the Top */}
-            <View style={styles.header} />
 
             {/* ✅ Main Content (Everything Below the Banner) */}
             <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -173,9 +171,8 @@ const styles = StyleSheet.create({
     },
     header: {
         height: 100,
-        backgroundColor: 'white',
         borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
+        borderBottomColor: 'white',
     },
     scrollContainer: {
         paddingHorizontal: 20,

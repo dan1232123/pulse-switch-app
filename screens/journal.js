@@ -8,8 +8,6 @@ export default function JournalScreen() {
 
     return (
         <View style={styles.container}>
-            {/* White Banner */}
-            <View style={styles.header} />
 
             {/* Toggle between Diary & Notes */}
             <View style={styles.toggleContainer}>
@@ -63,7 +61,7 @@ const styles = StyleSheet.create({
     },
     selectedTab: {
         borderBottomWidth: 4,
-        borderBottomColor: '#2ecc71',
+        borderBottomColor: '#3498db',
     },
     toggleText: {
         fontSize: 18,
@@ -71,7 +69,7 @@ const styles = StyleSheet.create({
         color: '#555',
     },
     selectedText: {
-        color: '#2ecc71',
+        color: '#3498db',
     },
     contentContainer: {
         flex: 1,

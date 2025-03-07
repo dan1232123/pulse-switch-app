@@ -44,7 +44,8 @@
     "react-native-svg": "^15.11.1",
     "react-native-svg-circular-progress": "^1.0.4",
     "react-native-swiper": "^1.6.0",
-    "react-native-vector-icons": "^10.2.0"
+    "react-native-vector-icons": "^10.2.0",
+    "@expo/vector-icons": "^14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

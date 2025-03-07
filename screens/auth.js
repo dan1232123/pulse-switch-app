@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient'; // Import LinearGradient
 import { initializeApp } from '@firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from '@firebase/firestore';
@@ -29,14 +30,22 @@ const db = getFirestore(app);
 
 const AuthScreen = ({ email, setEmail, password, setPassword, username, setUsername, isLogin, setIsLogin, handleAuthentication }) => {
   return (
-    <View style={styles.container}>
-      {/* Top Half - Green Background */}
-      <View style={styles.topHalf}>
+    <LinearGradient
+      colors={['#243B55', '#f0f0f0']} // Gradient from top to bottom
+      locations={[0.5, 1]} // Adjust the gradient transition point
+      style={styles.container}
+    >
+      {/* Logo and Title */}
+      <View style={styles.logoContainer}>
+        <Image
+          source={require('../assets/logonew.png')} // Replace with the correct path to your logo
+          style={styles.logo}
+        />
         <Text style={styles.title}>{isLogin ? 'Sign In' : 'Sign Up'}</Text>
       </View>
 
-      {/* Bottom Half - Off-White Background */}
-      <View style={styles.bottomHalf}>
+      {/* Input Fields and Buttons */}
+      <View style={styles.formContainer}>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -83,9 +92,8 @@ const AuthScreen = ({ email, setEmail, password, setPassword, username, setUsern
         </TouchableOpacity>
 
         <Text style={styles.disclaimerNotice}>PulseSwitch 2025</Text>
-
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -162,23 +170,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  topHalf: {
+  logoContainer: {
     flex: 1,
-    backgroundColor: '#2ecc71', // Green
     justifyContent: 'center',
     alignItems: 'center',
   },
-  bottomHalf: {
-    flex: 1,
-    backgroundColor: '#f0f0f0', // Off-White/Grey
-    alignItems: 'center',
-    padding: 20,
+  logo: {
+    width: 150, // Adjust the size of your logo
+    height: 150, // Adjust the size of your logo
+    resizeMode: 'contain',
   },
   title: {
-    fontSize: 28,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: 'white',
-    fontFamily: 'AvenirNext-DemiBold',
+    color: 'white', // White text for better contrast on the gradient
+    marginTop: 10,
+  },
+  formContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
   inputContainer: {
     width: '90%',
@@ -188,12 +200,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     marginBottom: 15,
     elevation: 3, // Shadow effect
-    fontFamily: 'AvenirNext-DemiBold',
   },
   input: {
     fontSize: 16,
     color: '#333',
-    fontFamily: 'AvenirNext-DemiBold',
   },
   authButton: {
     width: '90%',
@@ -207,17 +217,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
-    fontFamily: 'AvenirNext-DemiBold',
   },
   toggleText: {
     color: '#3498db',
     fontSize: 16,
     fontWeight: 'bold',
-    fontFamily: 'AvenirNext-DemiBold',
   },
   disclaimerNotice: {
-    color: 808080,
+    color: '#808080',
     fontSize: 10,
-    marginTop: 180
-  }
+    marginTop: 20,
+  },
 });
