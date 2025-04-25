@@ -106,30 +106,38 @@ const TreadmillWorkout = () => {
 
         timeSplits = timeSplits.map(split => split / sumOfSplits);
 
+        // Looping through each interval to construct workout
         for (let i = 0; i < intervals; i++) {
             let speed, incline, caloriesPerMin;
 
+            // Iteratively generate random speed and incline combinations until the calorie goal is reached.
             do {
                 speed = parseFloat((Math.random() * (maxSpd - minSpd) + minSpd).toFixed(1));
                 incline = parseFloat((Math.random() * (maxInc - minInc) + minInc).toFixed(1));
                 caloriesPerMin = calculateCaloriesPerMinute(speed, incline, userWeight);
             } while (caloriesPerMin < 5);
 
+            // Estimate time and calories for interval
             let timeForInterval;
             let caloriesBurned;
 
+            // For the last interval, use the remaining calories to finish exactly on target calorie goal
             if (i === intervals - 1) {
                 timeForInterval = parseFloat((remainingCalories / caloriesPerMin).toFixed(2));
                 caloriesBurned = remainingCalories;
             } else {
+                //Distribute time based on randomised time splits
                 timeForInterval = parseFloat((totalWorkoutDuration * timeSplits[i]).toFixed(2));
+                // Prevent unrealistic short intervals
                 timeForInterval = Math.min(timeForInterval, remainingTime - (intervals - (i + 1)));
                 caloriesBurned = parseFloat((caloriesPerMin * timeForInterval).toFixed(2));
             }
 
+            // Make sure interval values are reasonable minimums
             timeForInterval = Math.max(timeForInterval, 1);
             caloriesBurned = Math.max(caloriesBurned, caloriesPerMin);
 
+            // Store interval data
             intervalData.push({
                 interval: i + 1,
                 speed,
@@ -138,6 +146,7 @@ const TreadmillWorkout = () => {
                 caloriesBurned: caloriesBurned.toFixed(2),
             });
 
+            // Update what's left for the next interval
             remainingTime -= timeForInterval;
             remainingCalories -= caloriesBurned;
         }
@@ -160,7 +169,7 @@ const TreadmillWorkout = () => {
             <TextInput style={styles.input} placeholder="Weight (kg)" keyboardType="numeric" value={weight} onChangeText={setWeight} />
 
             <TouchableOpacity style={styles.button} onPress={generateWorkout}>
-                <Text style={styles.buttonText}>Generate Workout</Text>
+                <Text style={styles.buttonText}>Begin Workout</Text>
             </TouchableOpacity>
         </ScrollView>
     );

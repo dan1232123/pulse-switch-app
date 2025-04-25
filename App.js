@@ -10,14 +10,14 @@ import { initializeApp } from '@firebase/app';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, StyleSheet } from 'react-native';
 import { Image } from 'react-native';
-import { 
-  FIREBASE_API_KEY, 
-  FIREBASE_AUTH_DOMAIN, 
-  FIREBASE_PROJECT_ID, 
-  FIREBASE_STORAGE_BUCKET, 
-  FIREBASE_MESSAGING_SENDER_ID, 
-  FIREBASE_APP_ID, 
-  FIREBASE_MEASUREMENT_ID 
+import {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FIREBASE_MESSAGING_SENDER_ID,
+  FIREBASE_APP_ID,
+  FIREBASE_MEASUREMENT_ID
 } from '@env';
 
 // ✅ Firebase Configuration
@@ -38,11 +38,11 @@ const auth = getAuth(firebaseApp);
 import HomeScreen from './screens/home';
 import WorkoutScreen from './screens/workout';
 import TreadmillWorkout from './screens/workouts/treadmillworkout';
-import ExecuteTreadmillWorkout from './screens/workouts/executetreadmillworkout'; 
+import ExecuteTreadmillWorkout from './screens/workouts/executetreadmillworkout';
 import JournalScreen from './screens/journal';
 import AdviceScreen from './screens/advice';
 import AccountScreen from './screens/account';
-import AuthScreen from './screens/auth'; 
+import AuthScreen from './screens/auth';
 import AboutPulseSwitch from './screens/home_screens/aboutpulseswitch';
 import DiaryScreen from './screens/journal_screens/diary';
 import NotesScreen from './screens/journal_screens/notes';
@@ -150,8 +150,8 @@ function MainTabs() {
       <Tab.Screen name="Workout" component={WorkoutStack} options={{ headerShown: false }} />
       <Tab.Screen name="Journal" component={JournalStack} options={{ headerShown: false }} />
       <Tab.Screen name="Advice" component={AdviceStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Account" component={AccountStack} options={{ headerShown: false }}/>
-      
+      <Tab.Screen name="Account" component={AccountStack} options={{ headerShown: false }} />
+
     </Tab.Navigator>
   );
 }

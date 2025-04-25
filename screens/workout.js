@@ -1,47 +1,49 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const WorkoutScreen = () => {
     const navigation = useNavigation();
     const [showInfo, setShowInfo] = useState(false); // State for dropdown info
+    const [animation] = useState(new Animated.Value(0)); // Animation for smooth collapse/expand
+
+    const toggleInfo = () => {
+        if (showInfo) {
+            Animated.timing(animation, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: false,
+            }).start();
+        } else {
+            Animated.timing(animation, {
+                toValue: 1,
+                duration: 300,
+                useNativeDriver: false,
+            }).start();
+        }
+        setShowInfo(!showInfo);
+    };
+
+    const infoHeight = animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 150], // Adjust height based on content
+    });
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-            {/* Header */}
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Treadmill Workout - The Original</Text>
-            </View>
-
-            {/* Smaller Treadmill Workout Button */}
+            {/* Treadmill Workout Button with Image */}
             <View style={styles.centerContainer}>
                 <TouchableOpacity
                     style={[styles.widget, styles.treadmillWidgetSmall]}
                     onPress={() => navigation.navigate('TreadmillWorkout')}
                 >
+                    <Image
+                        source={require('../assets/logonew.png')} // Add your image here
+                        style={styles.buttonImage}
+                    />
                     <Text style={styles.widgetText}>Treadmill Workout</Text>
+                    <Text style={styles.widgetText2}>Set your calorie goal, randomise, and run away..</Text>
                 </TouchableOpacity>
-            </View>
-
-            {/* Info Dropdown Section */}
-            <View style={styles.centerContainer}>
-                <TouchableOpacity
-                    style={styles.infoHeader}
-                    onPress={() => setShowInfo(!showInfo)}
-                >
-                    <Text style={styles.infoHeaderText}>What is this workout?</Text>
-                    <Text style={styles.arrowIcon}>{showInfo ? '▲' : '▼'}</Text>
-                </TouchableOpacity>
-
-                {showInfo && (
-                    <View style={styles.infoContent}>
-                        <Text style={styles.infoText}>
-                            This is the original treadmill workout designed to improve your cardiovascular health and endurance. 
-                            It includes intervals of running and walking to maximize calorie burn and build stamina. 
-                            Perfect for beginners and advanced users alike!
-                        </Text>
-                    </View>
-                )}
             </View>
 
             {/* Bottom Row */}
@@ -69,18 +71,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f8f8',
         paddingBottom: 20, // Add some padding at the bottom
     },
-    header: {
-        width: '100%',
-        backgroundColor: 'white',
-        height: 100,
-        justifyContent: 'flex-end',
+    featuredWorkoutContainer: {
+        width: '90%',
+        marginTop: 20,
         alignItems: 'center',
-        paddingBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
     },
-    headerText: {
-        fontSize: 24,
+    featuredWorkoutText: {
+        fontSize: 22,
         fontWeight: 'bold',
         color: '#333',
     },
@@ -101,13 +98,25 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
     },
     treadmillWidgetSmall: {
-        height: 100, // Smaller height
+        height: 250, // Adjusted height to accommodate image
         backgroundColor: '#2ecc71', // Light Green
+    },
+    buttonImage: {
+        width: 150,
+        height: 150,
+        marginBottom: 10,
     },
     widgetText: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: 'bold',
+        marginBottom: 10,
+    },
+
+    widgetText2: {
+        color: 'white',
+        fontSize: 10,
+
     },
     infoHeader: {
         flexDirection: 'row',
@@ -135,8 +144,7 @@ const styles = StyleSheet.create({
     },
     infoContent: {
         width: '90%',
-        marginTop: 10,
-        padding: 15,
+        overflow: 'hidden',
         backgroundColor: 'white',
         borderRadius: 10,
         elevation: 3,
@@ -148,6 +156,7 @@ const styles = StyleSheet.create({
     infoText: {
         fontSize: 16,
         color: '#555',
+        padding: 15,
     },
     bottomRow: {
         flexDirection: 'row',
